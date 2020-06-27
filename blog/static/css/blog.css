@@ -1,12 +1,19 @@
-h1 a, h2 a {
-    color: #C25100;
+
+*{
+    font-family: 'Muli', sans-serif;
 }
 
-.page-header {
-    background-color: #C25100;
-    margin-top: 0;
-    padding: 20px 20px 20px 40px;
+
+.brand{
+    font-weight: 800;
+    text-align: center;
 }
+
+.brand a{
+    text-decoration: none;
+    color: black;
+}
+
 
 .page-header h1, .page-header h1 a, .page-header h1 a:visited, .page-header h1 a:active {
     color: #ffffff;
@@ -52,3 +59,4 @@ h1, h2, h3, h4 {
 .comment {
     margin: 20px 0px 20px 20px;
 }
+

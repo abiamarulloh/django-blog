@@ -1,14 +1,48 @@
 {% extends 'blog/base.html' %}
 
-{% block content %}
+<!-- {% url 'search_results'%} -->
+{% block content %} 
+    {% if submitbutton == 'Search' and request.GET.q != '' %} 
+        {% if results %}
+            <div class="col-md-12">
+                <h2 class="text-center">Results for <b>{{ request.GET.q }}</b></h2>
+            </div>
+            {% for result in results %} 
+                    <div class="col-md-3 mx-auto">
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="post">
+                                    <h2 class="card-title"><a href="{% url 'post_detail' pk=result.pk %}" class="text-decoration-none">{{result.title}}</a></h2>
+                                    <!-- <p class="card-text">{{result.text|linebreaksbr}}</p> -->
+                                    <a href="{% url 'post_detail' pk=result.pk %}" class="text-dark d-block">Comments: {{ result.approved_comments.count }}</a>
+                                    <span class="text-muted">published: {{ result.published_date }}</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+            {% endfor %}
+        {% else %} 
+            No search results for this query 
+        {% endif %} 
+    {% endif %}
+
+  
     {% for post in posts %}
-    <div class="post border-bottom py-2">
-        <div class="date">
-            <p>published: {{ post.published_date }}</p>
+    <div class="col-md-3 my-3">
+        <div class="card">
+            <div class="card-body shadow-sm">
+                <div class="post ">
+                    <h2 class="card-title"><a href="{% url 'post_detail' pk=post.pk %}">{{ post.title }}</a></h2>
+                    <!-- <p class="card-text">{{ post.text|linebreaksbr }}</p> -->
+                    <a href="{% url 'post_detail' pk=post.pk %}" class="text-dark d-block">Comments: {{ post.approved_comments.count }}</a>
+                    <span class="text-muted">published: {{ post.published_date }}</span>
+                    <!-- keluarkan tag post -->
+                    {% for tag in post.tags.all %}
+                        <a href="{% url 'tag_post_list' pktitle=tag.title %}" class="badge badge-primary">{{tag.title}}</a>
+                    {% endfor %} 
+                </div>
+            </div>
         </div>
-        <h2><a href="{% url 'post_detail' pk=post.pk %}">{{ post.title }}</a></h2>
-        <p>{{ post.text|linebreaksbr }}</p>
-        <a href="{% url 'post_detail' pk=post.pk %}">Comments: {{ post.approved_comments.count }}</a>
     </div>
-    {% endfor %}
+    {% endfor %} 
 {% endblock %}
