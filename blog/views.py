@@ -16,9 +16,9 @@ def post_list(request):
         submitbutton= request.GET.get('submit')
 
         if query is not None:
-            lookups= Q(title__icontains=query) 
+            # Query
 
-            results= Post.objects.filter(lookups).distinct()
+            results= Post.objects.filter(title__icontains=query).distinct()
 
             context={'results': results,
                      'submitbutton': submitbutton}

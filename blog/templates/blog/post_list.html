@@ -12,10 +12,15 @@
                         <div class="card">
                             <div class="card-body">
                                 <div class="post">
-                                    <h2 class="card-title"><a href="{% url 'post_detail' pk=result.pk %}" class="text-decoration-none">{{result.title}}</a></h2>
+                                    <h2 class="card-title"><a href="{% url 'post_detail' pk=result.pk %}" >{{result.title}}</a></h2>
                                     <!-- <p class="card-text">{{result.text|linebreaksbr}}</p> -->
                                     <a href="{% url 'post_detail' pk=result.pk %}" class="text-dark d-block">Comments: {{ result.approved_comments.count }}</a>
                                     <span class="text-muted">published: {{ result.published_date }}</span>
+                                       <!-- keluarkan tag post -->
+                                    {% for tag in result.tags.all %}
+                                         <a href="{% url 'tag_post_list' pktitle=tag.title %}" class="badge badge-primary"> {{tag.title}}</a>
+                                    {% endfor %} 
+
                                 </div>
                             </div>
                         </div>
