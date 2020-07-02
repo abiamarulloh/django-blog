@@ -17,7 +17,7 @@ def post_list(request):
 
         if query is not None:
             # Query
-
+            # ,kmmiop,
             results= Post.objects.filter(title__icontains=query).distinct()
 
             context={'results': results,
@@ -30,7 +30,6 @@ def post_list(request):
 
     else:
         return render(request, 'blog/post_list.html', {'posts':posts})
-        
         
 
 def post_detail(request, pk):
