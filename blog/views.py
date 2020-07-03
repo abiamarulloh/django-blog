@@ -5,11 +5,15 @@ from django.db.models import Q
 from .forms import PostForm, CommentForm
 from django.shortcuts import redirect
 from django.contrib.auth.decorators import login_required
+import csv, io
+from django.http import HttpResponse
+from django.contrib import messages
+from django.views.generic import FormView
 
 # Create your views here.
 def post_list(request):
     posts = Post.objects.all()
-
+   
     if request.method == 'GET':
         query= request.GET.get('q')
 
@@ -41,7 +45,7 @@ def post_new(request):
     if request.method == "POST":
         form = PostForm(request.POST)
         if form.is_valid():
-            post = form.save(commit=True)
+            post = form.save(commit=False)
             post.author = request.user
             post.published_date = timezone.now()
             post.save()
@@ -101,3 +105,29 @@ def tag_post_list(request, pktitle):
     posts = Post.objects.filter(tags__title__startswith=pktitle)
     return render(request, 'blog/post_list.html', {'posts': posts})
 
+def export_import_page(request):
+    return render(request, 'blog/export_import_page.html')
+
+def export(request):
+    # Create the HttpResponse object with the appropriate CSV header.
+    response = HttpResponse(content_type='text/csv')
+    response['Content-Disposition'] = 'attachment; filename="posts.csv"'
+
+    writer = csv.writer(response)
+    writer.writerow(["Title", "Text", "Created At", "Published At"])
+
+    for post in Post.objects.all():
+        # tags = "|".join(post.tags.values_list("title", flat=True))
+        #  tags,
+        writer.writerow([post.title, post.text ,post.created_date, post.published_date])
+
+    return response
+
+def import_csv(FormView):
+   templae_name = "blog/export_import_page.html"
+   form_class = DataForm
+   success_url = 'import_csv'
+
+   def form_valid(self, form):
+       form.process_data()
+       return super().form_valid(form) 

@@ -10,4 +10,8 @@ urlpatterns = [
     path('comment/<int:pk>/approve/', views.comment_approve, name='comment_approve'),
     path('comment/<int:pk>/remove/', views.comment_remove, name='comment_remove'),
     path('tag/<str:pktitle>/', views.tag_post_list, name='tag_post_list'),
+
+    path("export_import_page", views.export_import_page, name="export_import_page"),
+    path("export", views.export, name="export"),
+    path("import_csv", views.import_csv, name="import_csv"),
 ]
