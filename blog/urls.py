@@ -12,6 +12,5 @@ urlpatterns = [
     path('tag/<str:pktitle>/', views.tag_post_list, name='tag_post_list'),
 
     path("export_import_page", views.export_import_page, name="export_import_page"),
-    path("export", views.export, name="export"),
-    path("import_csv", views.import_csv, name="import_csv"),
+    path("export_csv", views.export_csv, name="export_csv"),
 ]

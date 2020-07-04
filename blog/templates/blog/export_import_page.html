@@ -8,23 +8,26 @@ Export dan import page
 <div class="container">
     <div class="row">
         <div class="col-md-4 mx-auto">
-            <a href="{% url 'export' %}" class="btn btn-primary">Export Data Blog <i class="fa fa-download" aria-hidden="true"></i> <a>
+            <h5>Import file CSV</h3>   
+            <a href="{% url 'export_csv' %}" class="btn btn-primary">Export Data Blog <i class="fa fa-download" aria-hidden="true"></i> <a>
             <br>
+
             <hr>
-           
-            <form method="POST" action="{% url 'import_csv' %}" enctype="multipart/form-data">
-                {% csrf_token %}
-                <div class="form-group">
-                    <label for="file">File CSV</label>
-                    <input type="file" name="file" id="file" class="form-control">
-                </div>
-                <button class="btn btn-primary">
-                    Upload file
-                </button>
-            </form>
-           
-            
-          
+                <h5>Import file CSV</h3>   
+               {% if messages %}
+                <ul class="messages">
+                    {% for message in messages %}
+                    <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+                    {% endfor %}
+                </ul>
+                {% endif %}
+                
+                <form method="POST" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    {{ form.as_p }}
+                    <button type="submit" class="save btn-block btn btn-primary">Save</button>
+                </form>
+
         </div>
     </div>
 </div>
