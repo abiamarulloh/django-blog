@@ -1,0 +1,35 @@
+{% extends 'blog/base.html' %}
+
+{% block title %}
+Export dan import page
+{% endblock  %}
+
+{% block content %}
+<div class="container">
+    <div class="row">
+        <div class="col-md-4 mx-auto">
+            <h5>Import file CSV</h3>   
+            <a href="{% url 'export_csv' %}" class="btn btn-primary">Export Data Blog <i class="fa fa-download" aria-hidden="true"></i> <a>
+            <br>
+
+            <hr>
+                <h5>Import file CSV</h3>   
+               {% if messages %}
+                <ul class="messages">
+                    {% for message in messages %}
+                    <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+                    {% endfor %}
+                </ul>
+                {% endif %}
+                
+                <form method="POST" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    {{ form.as_p }}
+                    <button type="submit" class="save btn-block btn btn-primary">Save</button>
+                </form>
+
+        </div>
+    </div>
+</div>
+
+{% endblock  %}

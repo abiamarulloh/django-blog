@@ -14,3 +14,6 @@ class CommentForm(forms.ModelForm):
     class Meta:
         model = Comment
         fields = ('author', 'text',)
+
+class UploadFileForm(forms.Form):
+    file = forms.FileField()
